@@ -1,0 +1,49 @@
+WHY IAC (Infrastructure as a code):  ARMTemplates & Terraform
+----------------------------------
+- Automated way of deploying your resources
+
+1 VM --> 5min 
+100 VM --> 
+
+code -> 1 click of button 
+
+
+Sandeep - DEV   (left org)
+Shanmukhi - test and Prod
+
+- Repeatable (Reusable)
+
+- Preductable
+
+Introduction to JSON:
+--------------------
+
+ARM Templates structure:
+
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "",
+  "parameters": { },
+  "variables": { },
+  "resources": [ ], 
+  "outputs": { }
+}
+
+Write a storage account ARMTemplate:
+
+Pre-requisites:
+1. Install VSCode
+2. Azure Resource Manager tools extension 
+
+Deploy the ARMTemplate using CLI:
+--------------------------------
+
+az group create --name arm-vscode --location eastus
+
+az deployment group create --resource-group vscode-group --template-file template.json --parameters parameters.json
+
+Deploy the ARMTemplate using Powershell:
+---------------------------------------
+New-AzResourceGroup -Name arm-vscode -Location eastus
+
+New-AzResourceGroupDeployment -ResourceGroupName arm-vscode -TemplateFile ./azuredeploy.json -TemplateParameterFile ./azuredeploy.parameters.json
