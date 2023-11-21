@@ -38,23 +38,86 @@
                 "StorageV2"
             ],
             "defaultValue": "StorageV2"
+        },
+        "virtual_network_name": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the virtual network"
+            }
         }
     },
-    "variables": {},
+    "variables": {
+        "tags": {
+                "Department": "IT-Cloud",
+                "Project": "SAANVIK IT"
+            },
+        "vnet": {
+            "vnet_ipaddress": ["192.168.0.0/25","172.16.0.0/29"],
+            "snet1_name": "subnet-1",
+            "snet2_name": "subnet-2",
+            "snet3_name": "subnet-3",
+            "snet1_ipaddress": "192.168.0.0/26",
+            "snet2_ipaddress": "192.168.0.64/26",
+            "snet3_ipaddress": "172.16.0.0/29"
+        },
+        "public_ip_name": "saanvikit-pip"
+    },
     "resources": [
         {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2022-09-01",
             "name": "[parameters('storage_account_name')]",
             "location": "[resourceGroup().location]",
-            "tags": {
-                "Name": "saanvikit20231120",
-                "Project": "SAANVIK IT"
-            },
+            "tags": "[variables('tags')]",
             "sku": {
                 "name": "[parameters('storage_account_sku')]"
             },
             "kind": "[parameters('storage_account_kind')]"
+        },
+        {
+            "name": "[parameters('virtual_network_name')]",
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2023-04-01",
+            "location": "[resourceGroup().location]",
+            "tags": "[variables('tags')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": "[variables('vnet').vnet_ipaddress]"
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('vnet').snet1_name]",
+                        "properties": {
+                            "addressPrefix": "[variables('vnet').snet1_ipaddress]"
+                        }
+                    },
+                    {
+                        "name": "[variables('vnet').snet2_name]",
+                        "properties": {
+                            "addressPrefix": "[variables('vnet').snet2_ipaddress]"
+                        }
+                    },
+                    {
+                        "name": "[variables('vnet').snet3_name]",
+                        "properties": {
+                            "addressPrefix": "[variables('vnet').snet3_ipaddress]"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[variables('public_ip_name')]",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2023-04-01",
+            "location": "[resourceGroup().location]",
+            "tags": "[variables('tags')]",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "dnsSettings": {
+                    "domainNameLabel": "saanvikitpip"
+                }
+            }
         }
     ],
     "outputs": {}

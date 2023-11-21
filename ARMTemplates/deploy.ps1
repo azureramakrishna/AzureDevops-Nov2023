@@ -1,0 +1,1 @@
+New-AzResourceGroupDeployment -ResourceGroupName vscode-group -TemplateFile .\template.json -TemplateParameterFile .\parameters.json -Verbose
