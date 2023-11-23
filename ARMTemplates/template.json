@@ -44,6 +44,18 @@
             "metadata": {
                 "description": "Name of the virtual network"
             }
+        },
+        "virtual_machine_name": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the virtual machine"
+            }
+        },
+        "adminUser": {
+            "type": "string"
+        },
+         "adminPassword": {
+            "type": "string"
         }
     },
     "variables": {
@@ -60,7 +72,9 @@
             "snet2_ipaddress": "192.168.0.64/26",
             "snet3_ipaddress": "172.16.0.0/29"
         },
-        "public_ip_name": "saanvikit-pip"
+        "public_ip_name": "saanvikit-pip",
+        "nsg_name": "saanvikit-nsg",
+        "nic_name": "saanvikit-nic"
     },
     "resources": [
         {
@@ -79,6 +93,9 @@
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2023-04-01",
             "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups',variables('nsg_name'))]"
+            ],
             "tags": "[variables('tags')]",
             "properties": {
                 "addressSpace": {
@@ -88,7 +105,10 @@
                     {
                         "name": "[variables('vnet').snet1_name]",
                         "properties": {
-                            "addressPrefix": "[variables('vnet').snet1_ipaddress]"
+                            "addressPrefix": "[variables('vnet').snet1_ipaddress]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsg_name'))]"
+                            }
                         }
                     },
                     {
@@ -118,7 +138,129 @@
                     "domainNameLabel": "saanvikitpip"
                 }
             }
+        },        
+        {
+            "name": "[variables('nsg_name')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2023-04-01",
+            "location": "[resourceGroup().location]",
+            "tags": "[variables('tags')]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "RDP",
+                        "properties": {
+                            "description": "RDP",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "3389",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 100,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "HTTP",
+                        "properties": {
+                            "description": "HTTP",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "80",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 200,
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[variables('nic_name')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2023-04-01",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', variables('public_ip_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtual_network_name'))]"
+            ],
+            "tags": "[variables('tags')]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipConfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('public_ip_name'))]"
+                            },
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtual_network_name'), variables('vnet').snet1_name)]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[parameters('virtual_machine_name')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2023-03-01",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', toLower(parameters('storage_account_name')))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('nic_name'))]"
+            ],
+            "tags": "[variables('tags')]",
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_B2s"
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtual_machine_name')]",
+                    "adminUsername": "[parameters('adminUser')]",
+                    "adminPassword": "[parameters('adminPassword')]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2022-Datacenter",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "[concat(parameters('virtual_machine_name'),'-','osdisk')]",
+                        "caching": "ReadWrite",
+                        "createOption": "FromImage"
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('nic_name'))]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true,
+                        "storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts/', toLower(parameters('storage_account_name')))).primaryEndpoints.blob]"
+                    }
+                }
+            }
         }
     ],
-    "outputs": {}
+    "outputs": {
+    //    "VMPublicip": {
+    //     "type": "string",
+    //     "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses',variables('public_ip_name'))).value]"
+    //    },
+    //    "username": {
+    //     "type": "string",
+    //     "value": "[parameters('adminUser')]"
+    //    }
+    }
 }
