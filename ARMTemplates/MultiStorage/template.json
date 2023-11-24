@@ -1,0 +1,71 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "storage_account_name": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the storage account"
+            }
+        },
+        "storage_account_sku": {
+            "type": "string",
+            "metadata": {
+                "description": "SKU of the storage account "
+            },
+            "allowedValues": [
+                "Premium_LRS",
+                "Premium_ZR",
+                "Standard_GRS",
+                "Standard_GZRS",
+                "Standard_LRS",
+                "Standard_RAGRS",
+                "Standard_RAGZRS",
+                "Standard_ZRS"
+            ],
+            "defaultValue": "Standard_LRS"
+        },
+        "storage_account_kind": {
+            "type": "string",
+            "metadata": {
+                "description": "Type of the storage account "
+            },
+            "allowedValues": [
+                "BlobStorage",
+                "BlockBlobStorage",
+                "FileStorage",
+                "Storage",
+                "StorageV2"
+            ],
+            "defaultValue": "StorageV2"
+        },
+        "count_value": {
+            "type": "int"
+        }
+    },
+    "functions": [],
+    "variables": {
+        "tags": {
+                "Department": "IT-Cloud",
+                "Project": "SAANVIK IT"
+            }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2022-09-01",
+            "name": "[concat(parameters('storage_account_name'),copyIndex(1))]",
+            "location": "[resourceGroup().location]",
+            "tags": "[variables('tags')]",
+            "copy": {
+                "name": "storageCopy",
+                "count": "[parameters('count_value')]"
+            },
+            "sku": {
+                "name": "[parameters('storage_account_sku')]"
+            },
+            "kind": "[parameters('storage_account_kind')]"
+        }
+    ],
+    "outputs": {}
+}

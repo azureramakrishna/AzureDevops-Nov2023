@@ -47,3 +47,17 @@ Deploy the ARMTemplate using Powershell:
 New-AzResourceGroup -Name arm-vscode -Location eastus
 
 New-AzResourceGroupDeployment -ResourceGroupName arm-vscode -TemplateFile ./azuredeploy.json -TemplateParameterFile ./azuredeploy.parameters.json
+
+
+Multiresource creation:
+----------------------
+copyindex()
+
+HelperFunctions:
+---------------
+toLower
+toUpper
+DependsOn
+Concat
+[Resourcegroup().location]
+resourceid 
