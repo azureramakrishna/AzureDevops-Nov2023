@@ -66,6 +66,11 @@ jobs:
       ARM_SUBSCRIPTION_ID: ${{ secrets.MVP_SUBSCRIPTION }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
 
+    # Set default working-directory to terraform dir
+    defaults:
+      run:
+        working-directory: ./Terraform
+
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
