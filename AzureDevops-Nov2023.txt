@@ -61,3 +61,49 @@ DependsOn
 Concat
 [Resourcegroup().location]
 resourceid 
+
+
+Terraform: Infrastructure as a code (IAC) - Open source 
+---------
+
+ARMTemplate																Terraform 
+-----------																---------
+1. IAC Tool 															1. IAC Tool 
+2. Specific to Azure 													2. Open source (Azure, AWS, GCP, OCI, onprem etc)
+3. JSON Format 														    3. HCL Language (Hashicorp configuration language)
+4. extension .json 														4. extension .tf 
+5. template.json 														5. main.tf
+	parameters.json															variables.tf 
+6. Schema																6. Bulding blocks
+	contentVersion															providers
+	parameters																resources
+	variables																outputs
+	resources
+	output 
+7. Azure Powershell / Azure CLI 										7. Life cycle of terraform 
+	New-AzResourceGroupDeployment \											Terraform init
+	-ResourceGroupName \													Terraform fmt
+	-TemplateFile \															Terraform validate										
+	-TemplateParameterFile \												Terraform plan
+	-Verbose																Terraform apply
+																			Terraform destroy
+																			
+Getting started with terraform:
+------------------------------
+1. Install terraform - https://developer.hashicorp.com/terraform/install (1.6.4)
+2. Extract the .zip file and copy and past the terraform.exe to C:\Windows
+3. Validate the terraform by opening cmd and type terraform 
+Main commands:
+  init          Prepare your working directory for other commands
+  validate      Check whether the configuration is valid
+  plan          Show changes required by the current configuration
+  apply         Create or update infrastructure
+  destroy       Destroy previously-created infrastructure
+4. VSCode --> Install Extensions --> Terraform & Azure Terraform 
+5. Terraform providers --> https://registry.terraform.io/browse/providers
+		aws - aws 
+		azure - azurerm
+		gcp - google
+6. Azure terraform provider --> https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs
+
+terraform.tfstate --> it consist of the deployment state in the form of JSON
