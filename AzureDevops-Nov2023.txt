@@ -99,11 +99,24 @@ Main commands:
   plan          Show changes required by the current configuration
   apply         Create or update infrastructure
   destroy       Destroy previously-created infrastructure
-4. VSCode --> Install Extensions --> Terraform & Azure Terraform 
+4. VSCode --> Install Extensions --> Terraform & Azure Terraform & Advanced Terraform Snippets Generator
 5. Terraform providers --> https://registry.terraform.io/browse/providers
 		aws - aws 
 		azure - azurerm
 		gcp - google
 6. Azure terraform provider --> https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs
 
-terraform.tfstate --> it consist of the deployment state in the form of JSON
+
+
+**
+terraform version = 1.6.4
+terraform provider version (azurerm) = 3.70.0
+
+terraform init 		--> download provider plugins
+terraform fmt		--> format the templates 
+terraform validate 	--> validate the terraform configuration 
+terraform plan 		-->	Keep the lock to terraform.tfstate file and refresh and provide the plan --> Plan: 2 to add, 0 to change, 0 to destroy.
+terraform apply 	-->	Keep the lock to terraform.tfstate file and start deploying the template to targeted environment (azure)
+terraform destroy 	--> It will delete the resource under your main.tf file 
+
+terraform.tfstate --> it consist of the deployment state in the JSON format
