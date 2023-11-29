@@ -99,7 +99,7 @@ Main commands:
   plan          Show changes required by the current configuration
   apply         Create or update infrastructure
   destroy       Destroy previously-created infrastructure
-4. VSCode --> Install Extensions --> Terraform & Azure Terraform & Advanced Terraform Snippets Generator
+4. VSCode --> Install Extensions --> Terraform & Azure Terraform 
 5. Terraform providers --> https://registry.terraform.io/browse/providers
 		aws - aws 
 		azure - azurerm
@@ -108,7 +108,7 @@ Main commands:
 
 
 
-**
+**  0.13
 terraform version = 1.6.4
 terraform provider version (azurerm) = 3.70.0
 
@@ -120,3 +120,20 @@ terraform apply 	-->	Keep the lock to terraform.tfstate file and start deploying
 terraform destroy 	--> It will delete the resource under your main.tf file 
 
 terraform.tfstate --> it consist of the deployment state in the JSON format
+
+Data sources: Use data source to access information about an existing resources.
+------------
+Resource Group
+Virtual Network 
+
+new VM 
+
+Authenticate to portal via SPN:
+-------------------------------
+Client_id: 14651c27-1aad-4251-b759-b208f67cac4a
+tenant_id: 459865f1-a8aa-450a-baec-8b47a9e5c904
+secret: OxR8Q~EcZ2UvegBB.VFLduuN3frITEvuwaZ.JcgF
+subscription_id: 6e4924ab-b00c-468f-ae01-e5d33e8786f8
+
+Azure terraform backend:
+------------------------
