@@ -61,6 +61,7 @@ DependsOn
 Concat
 [Resourcegroup().location]
 resourceid 
+copyindex()
 
 
 Terraform: Infrastructure as a code (IAC) - Open source 
@@ -137,3 +138,31 @@ subscription_id: 6e4924ab-b00c-468f-ae01-e5d33e8786f8
 
 Azure terraform backend:
 ------------------------
+
+
+How to deploy multiple resources:
+--------------------------------
+	count.index
+	
+Terraform locals:
+----------------
+locals {
+  project = "saanvikit"
+}
+
+saanvikitsa
+saanvikit-vm
+saanvikit-nsg
+
+Terraform for_each Meta-Argument:
+---------------------------------
+
+lower
+Upper 
+count.index 
+for_each 
+depends_on 
+
+
+Terraform Module:
+----------------
