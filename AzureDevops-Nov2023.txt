@@ -166,3 +166,73 @@ depends_on
 
 Terraform Module:
 ----------------
+
+
+AzureDevops:
+-----------
+Azure: 			portal.azure.com 
+AzureDevops: 	dev.azure.com
+
+
+Azure Boards:
+------------
+Sprint1 Model: 2 weeks (4 dec - 15 dec)
+
+	sprint planning: 
+	Daily standup calls
+	Retrospecitve
+
+Sprint2
+		
+
+
+Process:
+	- Agile
+	- Scrum 
+	- Basic 
+	- CMMI
+	
+Agile work items types:
+	- Epic: 		Epics help teams effectively manage and groom their product backlog
+	- Feature: 		Tracks a feature that will be released with the product
+	- User Story: 	Tracks an activity the user will be able to perform with the product
+	- Task: 		Tracks work that needs to be done
+		- Issue: 		Tracks an obstacle to progress.
+		- Bug: 			Describes a divergence between required and actual behavior, and tracks the work done to correct the defect and verify.
+		
+	Epic 
+		\_
+			Feature 
+				\_
+					Userstory
+						\_
+							Task
+	
+
+Epic:		Amazon.in 
+
+Features: 	Singup page (google, appleid, facebook etc)
+			Login page 
+			Home page 
+			Product backlog 
+			Cart
+			Paymentgateway
+			Tracking system 
+			Support 
+			
+User story: Singup page (google, appleid, facebook etc)
+			Login page
+			Home page
+			
+Task: 		Singup page with google (16hr)
+			Singup page with Apple ID
+			Singup page with facebook 
+
+
+Azure Repo's:
+------------
+
+what is version control: to track all the changes and revert if needed
+	- Centralised version control system (Ex: Subversion)
+	- Districuted version control system (Ex: Git)
+		
