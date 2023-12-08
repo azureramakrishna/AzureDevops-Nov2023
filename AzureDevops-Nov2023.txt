@@ -236,3 +236,19 @@ what is version control: to track all the changes and revert if needed
 	- Centralised version control system (Ex: Subversion)
 	- Districuted version control system (Ex: Git)
 		
+Azure Pipelines:
+---------------
+Pre-requisites:
+--------------
+1. Service connection
+	- Service principal
+		client_id: a27f1bf5-f172-4ab2-a94f-5d51fe330ccb
+		Secret: 5LB8Q~MZu7vh4WNfHl~T0jOvnmN3wbw9t1DBGdB~
+		tenant_id: 459865f1-a8aa-450a-baec-8b47a9e5c904
+		subscription_id: 6e4924ab-b00c-468f-ae01-e5d33e8786f8
+		
+2. Pipeline Agent pool
+	- Microsoft Hosted Agent https://forms.office.com/pages/responsepage.aspx?id=v4j5cvGGr0GRqy180BHbR63mUWPlq7NEsFZhkyH8jChUMlM3QzdDMFZOMkVBWU5BWFM3SDI2QlRBSC4u
+	
+	- Self-Hosted Agent (VM)
+		brup5zv5psic4fwr4wywkqbfqzidnxrtdspywuwgnzph3npyikvq
