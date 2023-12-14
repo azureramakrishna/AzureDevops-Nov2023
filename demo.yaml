@@ -1,0 +1,23 @@
+---
+TrainingModule: AzureDevops
+TrainingInstitute: 'SAANVIK IT'
+TrainerName: Ramakrishna
+ContactNumber: 9513184144
+Address: 
+  DoorNo: 123
+  Location: Kukatpally
+  City: Hyderabad
+  State: TS
+
+Participants:
+  - Name: Sandeep
+    Location: Hyderabad
+    IsAzureAdmin: true 
+  
+  - Name: Shanmukhi
+    Location: UK
+    IsAzureAdmin: true
+
+  - Name: Vamshi
+    Location: Bangalore
+    IsAzureAdmin: true

@@ -1,5 +1,6 @@
 {
-    "TraindingModule": "AzureDevops", "TrainingInstitute": "SAANVIK IT",
+    "TraindingModule": "AzureDevops", 
+    "TrainingInstitute": "SAANVIK IT",
     "TrainerName": "Ramakrishna",
     "ContactNumber": 9513184144,
     "Address": {
